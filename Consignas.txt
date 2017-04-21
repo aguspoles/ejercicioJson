@@ -1,0 +1,8 @@
+1) 
+Usando http://www.omdbapi.com/?t=
+hacer un prog. que le pida al usuario un nombre de pelicula y le diga el año de la misma
+
+2) 
+Usando
+https://maps.googleapis.com/maps/api/geocode/json?address=
+y pedirle al usuario que ingrese una ciudad, mostrarle en pantalla el pais al que pertenece dicha ciudad
