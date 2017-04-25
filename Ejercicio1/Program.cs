@@ -10,27 +10,46 @@ namespace Ejercicio1
     {
         static void Main(string[] args)
         {
-            WebRequest req = WebRequest.Create("http://www.omdbapi.com/?t=[Terminator]&");
+            ConsoleKeyInfo userKey;
+            string title;
+            int x, y;
 
-            WebResponse respuesta = req.GetResponse();
+            while (true)
+            {
+                Console.Write("Introduzca el nombre de la pelicula:");
+                x = Console.CursorLeft;
+                y = Console.CursorTop;
+                Console.Write("\nPress ENTER to exit");
+                Console.SetCursorPosition(x, y);
 
-            Stream stream = respuesta.GetResponseStream();
+                userKey = Console.ReadKey();
+                if (userKey.Key == ConsoleKey.Enter)
+                    break;
+                else title = userKey.Key.ToString() + Console.ReadLine();
 
-            StreamReader sr = new StreamReader(stream);
+                    //request a la pagina
+                    WebRequest req = WebRequest.Create("http://www.omdbapi.com/?t="
+                        + "[" + title + "]&");
 
-            /*string pasoAMinuscula = sr.ReadToEnd();
-            pasoAMinuscula.ToLower();*/
-            JObject data = JObject.Parse(sr.ReadToEnd());
-            Console.WriteLine((string)data["Titulo"]);
-            string titulo;
-            Console.Write("Introduzca el nombre de la pelicula:");
-            titulo = Console.ReadLine();
+                WebResponse respuesta = req.GetResponse();
 
-            //string titulo = (string)data[año];
+                //stream de la respuesta de la pagina
+                Stream stream = respuesta.GetResponseStream();
 
-            Console.WriteLine(titulo);
+                //leo el stream
+                StreamReader sr = new StreamReader(stream);
 
-            Console.ReadKey();
+                //creo un objeto json con lo q leo del stream
+                JObject data = JObject.Parse(sr.ReadToEnd());
+      
+                Console.SetCursorPosition(0, y + 2);
+                Console.WriteLine("Year:" + (string)data["Year"]);
+                Console.WriteLine("Error:" + (string)data["Error"]);
+            }
+
+
+            //Console.WriteLine(data.ToString());
+
         }
 
     }
